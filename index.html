@@ -1,78 +1,107 @@
 <!DOCTYPE html>
 
-<!-- Indica que el contenido está en español-->
+<!-- Contenido en español -->
 <html lang="es">
 
-<!-- Encabezado, esto no se vé en la página final, sirve para organizar -->
+<!-- Encabezado, no se ve en la página -->
 <head>
+    <!-- Codificación de caracteres que permite usar tildes y la ñ -->
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <!-- Título que aparece en la pestaña del navegador -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título -->
     <title>Control LED Arduino</title>
 
-    <!-- Enlaza el archivo de estilos CSS para dar diseño a la página -->
+    <!-- Enlaza con CSS-->
     <link rel="stylesheet" href="estilos.css">
 </head>
 
-<!-- Cuerpo, esto no se vé en la página final, sirve para organizar -->
+<!-- Cuerpo, no se ve en la página -->
 <body>
+
+    <!-- Contenido principal, para CSS -->
     <main class="contenedor">
 
-        <!-- Título principal -->
+        <!-- Título -->
         <h1>CONTROL LED ARDUINO</h1>
-        <!-- Párrafo de texto -->
-        <p>Controla un LED desde tu navegador</p>
-        <!-- Agrupa la conexión con Arduino -->
-        <section class="conexion">
-            <!-- El id permite que JavaScript encuentre este texto y lo cambie al conectar -->
-            <p id="estadoConexion">
-                Arduino desconectado
-            </p>
+        <p>Controla tus LED desde tu navegador</p>
 
-            <!-- <button> crea un botón; JavaScript lo localiza por su id y detecta los clics -->
-            <button id="btnConectar">
-                Conectar Arduino
-            </button>
+        <!-- Agrupa conexión con Arduino -->
+        <section class="conexion">
+
+            <!-- El id permite que JavaScript encuentre este texto y lo cambie al conectar -->
+            <p id="estadoConexion">Arduino desconectado</p>
+
+            <!-- Crea un botón; JavaScript lo localiza por su id y detecta los clics -->
+            <button id="btnConectar">Conectar Arduino</button>
 
         </section>
 
-        <!-- Segunda sección: el panel de control del LED -->
+        <!-- Segunda sección: el panel de control de los LED -->
         <section class="panel">
 
-            <!-- <div> es una caja genérica; aquí muestra la bombilla (emoji).
-                 La clase "apagado" la pinta en gris y JavaScript la cambia a "encendido" -->
-            <div id="bombilla" class="bombilla apagado">
-                💡
+            <!-- Caja que agrupa las tres tarjetas de LED, una al lado de otra -->
+            <div class="leds">
+
+                <!-- LED 1. Cada tarjeta es un <div> con su bombilla, estado, botones y contador -->
+                <div class="led">
+
+                    <!-- Bombilla (emoji). La clase "apagado" la pinta en gris; JavaScript la cambia a "encendido" -->
+                    <div id="bombilla1" class="bombilla apagado">💡</div>
+
+                    <!-- Subtítulo -->
+                    <h2 id="estadoLed1">LED 1 APAGADO</h2>
+
+                    <button class="btnControl btnOn" data-orden="ON1" disabled>ENCENDER</button>
+                    <button class="btnControl btnOff" data-orden="OFF1" disabled>APAGAR</button>
+
+                    <!-- Botón de parpadeo -->
+                    <button class="btnControl btnBlink" data-orden="BLINK1" disabled>PARPADEAR</button>
+
+                    <!-- Contador de encendidos -->
+                    <p class="contador">Encendidos: <span id="contador1">0</span></p>
+                </div>
+
+                <!-- LED 2 -->
+                <div class="led">
+                    <div id="bombilla2" class="bombilla apagado">💡</div>
+                    <h2 id="estadoLed2">LED 2 APAGADO</h2>
+                    <button class="btnControl btnOn" data-orden="ON2" disabled>ENCENDER</button>
+                    <button class="btnControl btnOff" data-orden="OFF2" disabled>APAGAR</button>
+                    <button class="btnControl btnBlink" data-orden="BLINK2" disabled>PARPADEAR</button>
+                    <p class="contador">Encendidos: <span id="contador2">0</span></p>
+                </div>
+
+                <!-- LED 3 -->
+                <div class="led">
+                    <div id="bombilla3" class="bombilla apagado">💡</div>
+                    <h2 id="estadoLed3">LED 3 APAGADO</h2>
+                    <button class="btnControl btnOn" data-orden="ON3" disabled>ENCENDER</button>
+                    <button class="btnControl btnOff" data-orden="OFF3" disabled>APAGAR</button>
+                    <button class="btnControl btnBlink" data-orden="BLINK3" disabled>PARPADEAR</button>
+                    <p class="contador">Encendidos: <span id="contador3">0</span></p>
+                </div>
+
             </div>
 
-            <!-- <h2> es un subtítulo; JavaScript cambia su texto según el estado del LED -->
-            <h2 id="estadoLed">LED APAGADO</h2>
-
-            <!-- Caja que agrupa los dos botones de control -->
+            <!-- Botones para controlar todos los LED a la vez -->
             <div class="botones">
-
-                <!-- "disabled" deja el botón desactivado hasta que se conecte Arduino -->
-                <button id="btnEncender"
-                        disabled>
-                    ENCENDER
-                </button>
-
-                <button id="btnApagar"
-                        disabled>
-                    APAGAR
-                </button>
-
+                <button class="btnControl btnOn" data-orden="ALLON" disabled>ENCENDER TODOS</button>
+                <button class="btnControl btnOff" data-orden="ALLOFF" disabled>APAGAR TODOS</button>
             </div>
 
             <!-- Párrafo donde JavaScript muestra mensajes al usuario -->
-            <p id="mensaje">
-                Conecta Arduino para comenzar
-            </p>
+            <p id="mensaje">Conecta Arduino para comenzar</p>
 
         </section>
 
     </main>
+
+    <!-- Pie de página -->
+    <footer class="pie">
+
+        <p>Práctica realizada por José Alberto</p>
+
+    </footer>
 
     <!-- Carga el código JavaScript. Va al final para que los elementos de arriba ya existan -->
     <script src="script.js"></script>

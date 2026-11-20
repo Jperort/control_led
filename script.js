@@ -1,4 +1,4 @@
-// Variables de comunicacion
+// Variables de comunicación
 
 let puerto;
 let lector;
@@ -7,26 +7,16 @@ let escribiendo = false;
 
 // Elementos HTML
 
-const btnConectar =
-    document.getElementById("btnConectar");
+const btnConectar = document.getElementById("btnConectar");
+const estadoConexion = document.getElementById("estadoConexion");
+const mensaje = document.getElementById("mensaje");
 
-const btnEncender =
-    document.getElementById("btnEncender");
+// Todos los botones de control (encender, apagar y "todos")
+const botonesControl = document.querySelectorAll(".btnControl");
 
-const btnApagar =
-    document.getElementById("btnApagar");
-
-const estadoConexion =
-    document.getElementById("estadoConexion");
-
-const estadoLed =
-    document.getElementById("estadoLed");
-
-const bombilla =
-    document.getElementById("bombilla");
-
-const mensaje =
-    document.getElementById("mensaje");
+// Contador de encendidos (actividad 6)
+const contadores = { 1: 0, 2: 0, 3: 0 };
+const estadoPrevio = { 1: false, 2: false, 3: false };
 
 
 // CONECTAR ARDUINO
@@ -38,37 +28,27 @@ async function conectar() {
     try {
 
         if (!("serial" in navigator)) {
-
             alert("Utiliza Google Chrome o Microsoft Edge");
-
             return;
         }
 
         // Seleccionar puerto
-
         puerto = await navigator.serial.requestPort();
 
-        // Abrir comunicacion
-
-        await puerto.open({
-            baudRate: 9600
-        });
+        // Abrir comunicación
+        await puerto.open({ baudRate: 9600 });
 
         conectado = true;
 
-        estadoConexion.textContent =
-            "Arduino conectado";
-
-        mensaje.textContent =
-            "Ya puedes controlar el LED";
+        estadoConexion.textContent = "Arduino conectado";
+        mensaje.textContent = "Ya puedes controlar los LED";
 
         btnConectar.disabled = true;
 
-        btnEncender.disabled = false;
-        btnApagar.disabled = false;
+        // Activar todos los botones de control
+        botonesControl.forEach(boton => boton.disabled = false);
 
         // Preparar lector de datos
-
         const decoder = new TextDecoderStream();
 
         puerto.readable.pipeTo(decoder.writable)
@@ -81,9 +61,7 @@ async function conectar() {
     } catch (error) {
 
         console.error(error);
-
-        mensaje.textContent =
-            "Error al conectar Arduino";
+        mensaje.textContent = "Error al conectar Arduino";
 
     }
 
@@ -114,16 +92,13 @@ async function leerArduino() {
 
                 const respuesta = linea.trim();
 
-                if (respuesta === "ENCENDIDO") {
+                // Arduino responde con el formato LED1:1 o LED2:0
+                const coincidencia = respuesta.match(/^LED(\d):([01])$/);
 
-                    mostrarEstado(true);
-
-                }
-
-                if (respuesta === "APAGADO") {
-
-                    mostrarEstado(false);
-
+                if (coincidencia) {
+                    const numero = coincidencia[1];
+                    const encendido = coincidencia[2] === "1";
+                    mostrarEstado(numero, encendido);
                 }
 
             }
@@ -151,18 +126,14 @@ async function enviarOrden(orden) {
 
         const writer = puerto.writable.getWriter();
 
-        await writer.write(
-            new TextEncoder().encode(orden + "\n")
-        );
+        await writer.write(new TextEncoder().encode(orden + "\n"));
 
         writer.releaseLock();
 
     } catch (error) {
 
         console.error(error);
-
-        mensaje.textContent =
-            "Error enviando la orden";
+        mensaje.textContent = "Error enviando la orden";
 
     } finally {
 
@@ -173,47 +144,48 @@ async function enviarOrden(orden) {
 }
 
 
-// ENCENDER LED
+// Cada botón envía la orden que lleva en su atributo data-orden
 
-btnEncender.addEventListener("click", function() {
+botonesControl.forEach(boton => {
 
-    enviarOrden("ON");
+    boton.addEventListener("click", function () {
 
-});
+        enviarOrden(boton.dataset.orden);
 
-
-// APAGAR LED
-
-btnApagar.addEventListener("click", function() {
-
-    enviarOrden("OFF");
+    });
 
 });
 
 
 // ACTUALIZAR INTERFAZ
 
-function mostrarEstado(encendido) {
+function mostrarEstado(numero, encendido) {
+
+    const bombilla = document.getElementById("bombilla" + numero);
+    const estadoLed = document.getElementById("estadoLed" + numero);
+
+    if (!bombilla || !estadoLed) return;
+
+    // Actividad 6: contar las veces que el LED pasa de apagado a encendido
+    if (encendido && !estadoPrevio[numero]) {
+        contadores[numero]++;
+        document.getElementById("contador" + numero).textContent = contadores[numero];
+    }
+    estadoPrevio[numero] = encendido;
 
     if (encendido) {
 
-        estadoLed.textContent = "LED ENCENDIDO";
-
+        estadoLed.textContent = "LED " + numero + " ENCENDIDO";
         bombilla.classList.remove("apagado");
         bombilla.classList.add("encendido");
-
-        mensaje.textContent =
-            "Arduino ha encendido el LED";
+        mensaje.textContent = "Arduino ha encendido el LED " + numero;
 
     } else {
 
-        estadoLed.textContent = "LED APAGADO";
-
+        estadoLed.textContent = "LED " + numero + " APAGADO";
         bombilla.classList.remove("encendido");
         bombilla.classList.add("apagado");
-
-        mensaje.textContent =
-            "Arduino ha apagado el LED";
+        mensaje.textContent = "Arduino ha apagado el LED " + numero;
 
     }
 

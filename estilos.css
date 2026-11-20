@@ -11,7 +11,7 @@ body {
 /* Tarjeta blanca central que contiene la aplicación:
    limita su ancho, la centra y le da bordes redondeados */
 .contenedor {
-    max-width: 600px;
+    max-width: 800px;
     margin: auto;
     background: white;
     padding: 30px;
@@ -31,15 +31,36 @@ h1 {
     margin: 25px 0;
 }
 
-/* Espacio interior del panel de control del LED */
+/* Espacio interior del panel de control de los LED */
 .panel {
     padding: 20px;
 }
 
-/* Tamaño grande para la bombilla (emoji) y separación a su alrededor */
+/* Coloca las tres tarjetas en fila; si no caben, pasan a la línea siguiente */
+.leds {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Tarjeta individual de cada LED: fondo claro, esquinas redondeadas y ancho mínimo */
+.led {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 15px;
+    min-width: 180px;
+}
+
+/* Subtítulo de cada LED con un tamaño más pequeño */
+.led h2 {
+    font-size: 18px;
+}
+
+/* Tamaño de la bombilla (emoji) y separación a su alrededor */
 .bombilla {
-    font-size: 100px;
-    margin: 20px;
+    font-size: 70px;
+    margin: 10px;
 }
 
 /* Aspecto de bombilla apagada: en gris (sin color) y semitransparente */
@@ -57,11 +78,11 @@ h1 {
 /* Estilo común a todos los botones: tamaño, sin borde, esquinas
    redondeadas, texto blanco, puntero de mano y separación entre ellos */
 button {
-    padding: 15px 25px;
+    padding: 12px 18px;
     border: none;
     border-radius: 8px;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
     margin: 5px;
 }
@@ -71,14 +92,19 @@ button {
     background: #2563eb;
 }
 
-/* Botón "ENCENDER" en color verde */
-#btnEncender {
+/* Botones de encender en verde */
+.btnOn {
     background: #16a34a;
 }
 
-/* Botón "APAGAR" en color rojo */
-#btnApagar {
+/* Botones de apagar en rojo */
+.btnOff {
     background: #dc2626;
+}
+
+/* Botones de parpadear en naranja */
+.btnBlink {
+    background: #d97706;
 }
 
 /* Botones desactivados: color gris y cursor de "prohibido" */
@@ -87,8 +113,32 @@ button:disabled {
     cursor: not-allowed;
 }
 
+/* Contador de encendidos de cada LED: texto más pequeño y gris */
+.contador {
+    font-size: 14px;
+    color: #475569;
+    margin: 10px 0 0;
+}
+
+/* Separación de los botones "todos" respecto a las tarjetas */
+.botones {
+    margin-top: 25px;
+}
+
 /* Mensaje informativo inferior: separado del resto y en negrita */
 #mensaje {
     margin-top: 25px;
     font-weight: bold;
+}
+
+/* Pie de página: texto centrado, en gris y con espacio por encima */
+.pie {
+    margin-top: 30px;
+    color: #475569;
+}
+
+/* Imagen del pie de página: esquinas redondeadas y tamaño máximo para que no se desborde */
+.pie img {
+    border-radius: 10px;
+    max-width: 100%;
 }
