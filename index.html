@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<!-- Indica que el contenido está en español-->
+<html lang="es">
+
+<!-- Encabezado, esto no se vé en la página final, sirve para organizar -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <!-- Título que aparece en la pestaña del navegador -->
+    <title>Control LED Arduino</title>
+
+    <!-- Enlaza el archivo de estilos CSS para dar diseño a la página -->
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<!-- Cuerpo, esto no se vé en la página final, sirve para organizar -->
+<body>
+    <main class="contenedor">
+
+        <!-- Título principal -->
+        <h1>CONTROL LED ARDUINO</h1>
+        <!-- Párrafo de texto -->
+        <p>Controla un LED desde tu navegador</p>
+        <!-- Agrupa la conexión con Arduino -->
+        <section class="conexion">
+            <!-- El id permite que JavaScript encuentre este texto y lo cambie al conectar -->
+            <p id="estadoConexion">
+                Arduino desconectado
+            </p>
+
+            <!-- <button> crea un botón; JavaScript lo localiza por su id y detecta los clics -->
+            <button id="btnConectar">
+                Conectar Arduino
+            </button>
+
+        </section>
+
+        <!-- Segunda sección: el panel de control del LED -->
+        <section class="panel">
+
+            <!-- <div> es una caja genérica; aquí muestra la bombilla (emoji).
+                 La clase "apagado" la pinta en gris y JavaScript la cambia a "encendido" -->
+            <div id="bombilla" class="bombilla apagado">
+                💡
+            </div>
+
+            <!-- <h2> es un subtítulo; JavaScript cambia su texto según el estado del LED -->
+            <h2 id="estadoLed">LED APAGADO</h2>
+
+            <!-- Caja que agrupa los dos botones de control -->
+            <div class="botones">
+
+                <!-- "disabled" deja el botón desactivado hasta que se conecte Arduino -->
+                <button id="btnEncender"
+                        disabled>
+                    ENCENDER
+                </button>
+
+                <button id="btnApagar"
+                        disabled>
+                    APAGAR
+                </button>
+
+            </div>
+
+            <!-- Párrafo donde JavaScript muestra mensajes al usuario -->
+            <p id="mensaje">
+                Conecta Arduino para comenzar
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- Carga el código JavaScript. Va al final para que los elementos de arriba ya existan -->
+    <script src="script.js"></script>
+
+</body>
+</html>

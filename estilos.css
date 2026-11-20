@@ -1,0 +1,94 @@
+/* Estilo general de toda la página: tipo de letra, color de fondo,
+   texto centrado y espacio interior alrededor del contenido */
+body {
+    font-family: Arial, sans-serif;
+    background: #e8eef5;
+    text-align: center;
+    margin: 0;
+    padding: 30px;
+}
+
+/* Tarjeta blanca central que contiene la aplicación:
+   limita su ancho, la centra y le da bordes redondeados */
+.contenedor {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+/* Color azul para el título principal */
+h1 {
+    color: #2563eb;
+}
+
+/* Caja gris claro donde se muestra el estado de la conexión y el botón de conectar */
+.conexion {
+    background: #f1f5f9;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 25px 0;
+}
+
+/* Espacio interior del panel de control del LED */
+.panel {
+    padding: 20px;
+}
+
+/* Tamaño grande para la bombilla (emoji) y separación a su alrededor */
+.bombilla {
+    font-size: 100px;
+    margin: 20px;
+}
+
+/* Aspecto de bombilla apagada: en gris (sin color) y semitransparente */
+.apagado {
+    filter: grayscale(1);
+    opacity: 0.4;
+}
+
+/* Aspecto de bombilla encendida: a todo color y sin transparencia */
+.encendido {
+    filter: none;
+    opacity: 1;
+}
+
+/* Estilo común a todos los botones: tamaño, sin borde, esquinas
+   redondeadas, texto blanco, puntero de mano y separación entre ellos */
+button {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+/* Botón "Conectar Arduino" en color azul */
+#btnConectar {
+    background: #2563eb;
+}
+
+/* Botón "ENCENDER" en color verde */
+#btnEncender {
+    background: #16a34a;
+}
+
+/* Botón "APAGAR" en color rojo */
+#btnApagar {
+    background: #dc2626;
+}
+
+/* Botones desactivados: color gris y cursor de "prohibido" */
+button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* Mensaje informativo inferior: separado del resto y en negrita */
+#mensaje {
+    margin-top: 25px;
+    font-weight: bold;
+}
